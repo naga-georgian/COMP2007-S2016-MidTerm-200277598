@@ -8,12 +8,10 @@
 //------------------------------------------------------------------------------
 
 namespace COMP2007_S2016_MidTerm_200277598 {
-
-
-
-    public partial class TodoDetails
-    {
-
+    
+    
+    public partial class TodoDetails {
+        
         /// <summary>
         /// TodoNameTextBox control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace COMP2007_S2016_MidTerm_200277598 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TodoNameTextBox;
-
+        
         /// <summary>
         /// TodoNotesTextBox control.
         /// </summary>
@@ -31,7 +29,7 @@ namespace COMP2007_S2016_MidTerm_200277598 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TodoNotesTextBox;
-
+        
         /// <summary>
         /// todoCheckBox control.
         /// </summary>
@@ -40,7 +38,7 @@ namespace COMP2007_S2016_MidTerm_200277598 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox todoCheckBox;
-
+        
         /// <summary>
         /// Done control.
         /// </summary>
@@ -49,7 +47,7 @@ namespace COMP2007_S2016_MidTerm_200277598 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Done;
-
+        
         /// <summary>
         /// CancelButton control.
         /// </summary>
@@ -58,7 +56,7 @@ namespace COMP2007_S2016_MidTerm_200277598 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CancelButton;
-
+        
         /// <summary>
         /// SaveButton control.
         /// </summary>
