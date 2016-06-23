@@ -8,10 +8,11 @@
 //------------------------------------------------------------------------------
 
 namespace COMP2007_S2016_MidTerm_200277598 {
-    
-    
-    public partial class TodoList {
-        
+
+
+    public partial class TodoList
+    {
+
         /// <summary>
         /// PageSizeDropDownList control.
         /// </summary>
@@ -20,7 +21,7 @@ namespace COMP2007_S2016_MidTerm_200277598 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList PageSizeDropDownList;
-        
+
         /// <summary>
         /// TodoGridView control.
         /// </summary>

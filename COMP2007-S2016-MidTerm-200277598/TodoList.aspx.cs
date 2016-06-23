@@ -1,72 +1,83 @@
-﻿using System;
+﻿using COMP2007_S2016_MidTerm_200277598.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using COMP2007_S2016_MidTerm_200277598.Models;
 using System.Web.ModelBinding;
+using System.Linq.Dynamic;
 
-namespace COMP2007_S2016_MidTerm_200277598
+/**
+ @author: Naga RImmalapudi
+    @date: June 23,2016 
+    @Website Name : http://comp2007midterm200277598.azurewebsites.net
+    @This is a TodoList page. which will show all the todos to user who 
+    access this site.
+    @version = 1.0
+*/
+
+namespace COMP2007_S2016_MidTerm_200299657
 {
     public partial class TodoList : System.Web.UI.Page
     {
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // if loading the page for the first time, populate the grid from EF DB
+            // if loading the page for the first time, populate the Todo grid
             if (!IsPostBack)
             {
-                Session["SortColumn"] = "TodoID";
+                Session["SortColumn"] = "TodoID"; // default sort column
                 Session["SortDirection"] = "ASC";
-                // Get data
+                // Get the Todo data
                 this.GetTodo();
             }
         }
         protected void GetTodo()
         {
-            string sortString = Session["SortColumn"].ToString() + " " + Session["SortDirection"].ToString();
-
-            // connect to EF DB
+            // connect to EF
             using (TodoConnection db = new TodoConnection())
             {
-                // query the Students table using EF and LINQ
-                var Todo = (from allTodos in db.Todos
-                            select allTodos);
+                string SortString = Session["SortColumn"].ToString() + " " + Session["SortDirection"].ToString();
 
-                //bind the result to the GridView
+
+                var todo = (from allTodo in db.Todos
+                            select allTodo);
+
                 // bind the result to the GridView
-                TodoGridView.DataSource = Todo.AsQueryable().OrderBy(sortString).ToList();
+                TodoGridView.DataSource = todo.AsQueryable().OrderBy(SortString).ToList();
                 TodoGridView.DataBind();
             }
-
         }
-        protected void StudentsGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+
+        protected void TodoGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             // store which row was clicked
             int selectedRow = e.RowIndex;
 
-            // get the selected StudentID using the Grid's DataKey Collection
+
             int TodoID = Convert.ToInt32(TodoGridView.DataKeys[selectedRow].Values["TodoID"]);
 
-            // use EF to find the selected student from DB and remove it
+
             using (TodoConnection db = new TodoConnection())
             {
-                Todo deletedTodo = (from TodoRecords in db.Todos
-                                          where TodoRecords.TodoID == TodoID
-                                          select TodoRecords).FirstOrDefault();
+                // create object of the Todo class and store the query string inside of it
+                Todo deletedTodo = (from todoRecords in db.Todos
+                                    where todoRecords.TodoID == TodoID
+                                    select todoRecords).FirstOrDefault();
 
-                // perform the removal in the DB
+
                 db.Todos.Remove(deletedTodo);
+
+                // save my changes back to the database
                 db.SaveChanges();
 
                 // refresh the grid
                 this.GetTodo();
-
             }
         }
 
-        protected void StudentsGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void TodoGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             // Set the new page number
             TodoGridView.PageIndex = e.NewPageIndex;
@@ -75,9 +86,10 @@ namespace COMP2007_S2016_MidTerm_200277598
             this.GetTodo();
         }
 
+
         protected void PageSizeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // set new page size
+            // Set the new Page size
             TodoGridView.PageSize = Convert.ToInt32(PageSizeDropDownList.SelectedValue);
 
             // refresh the grid
@@ -86,10 +98,10 @@ namespace COMP2007_S2016_MidTerm_200277598
 
         protected void TodoGridView_Sorting(object sender, GridViewSortEventArgs e)
         {
-            // get the column to sort by
+            // get the column to sorty by
             Session["SortColumn"] = e.SortExpression;
 
-            // refresh the grid
+            // Refresh the Grid
             this.GetTodo();
 
             // toggle the direction
@@ -100,11 +112,11 @@ namespace COMP2007_S2016_MidTerm_200277598
         {
             if (IsPostBack)
             {
-                if (e.Row.RowType == DataControlRowType.Header) // check to see if the click is on the header row
+                if (e.Row.RowType == DataControlRowType.Header) // if header row has been clicked
                 {
                     LinkButton linkbutton = new LinkButton();
 
-                    for (int index = 0; index < TodoGridView.Columns.Count; index++)
+                    for (int index = 0; index < TodoGridView.Columns.Count - 1; index++)
                     {
                         if (TodoGridView.Columns[index].SortExpression == Session["SortColumn"].ToString())
                         {
@@ -123,5 +135,6 @@ namespace COMP2007_S2016_MidTerm_200277598
                 }
             }
         }
+
     }
 }
