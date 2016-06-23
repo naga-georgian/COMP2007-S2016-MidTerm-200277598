@@ -13,5 +13,13 @@ namespace COMP2007_S2016_MidTerm_200277598
 
     public partial class TodoDetails
     {
+        /// <summary>
+        /// StudentsGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+       
     }
 }
