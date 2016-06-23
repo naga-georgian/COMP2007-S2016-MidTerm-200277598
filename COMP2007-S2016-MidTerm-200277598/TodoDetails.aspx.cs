@@ -13,9 +13,9 @@ namespace COMP2007_S2016_MidTerm_200277598
     {
         protected void Page_Load(object sender, EventArgs e)
         {
- 
-            
-    }
+
+
+        }
         protected void CancelButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/TodoList.aspx");
@@ -31,7 +31,7 @@ namespace COMP2007_S2016_MidTerm_200277598
 
                 newTodo.TodoName = TodoNameTextBox.Text;
                 newTodo.TodoNotes = TodoNotesTextBox.Text;
-                
+
 
                 // adds a new studdent to the Student Table collection
                 db.Todos.Add(newTodo);
@@ -43,4 +43,5 @@ namespace COMP2007_S2016_MidTerm_200277598
                 Response.Redirect("~/TodoList.aspx");
             }
         }
+    }
 }
