@@ -16,32 +16,78 @@ namespace COMP2007_S2016_MidTerm_200277598
 
 
         }
+        protected void GetTodo()
+        {
+            // populate the form with existing todo data from the db
+            int TodoID = Convert.ToInt32(Request.QueryString["TodoID"]);
+
+            // connect to the EF DB
+            using (TodoConnection db = new TodoConnection())
+            {
+                // populate a student instance with the TodoID from the URL parameter
+                Todo updatedTodo = (from Todo in db.Todos
+                                          where Todo.TodoID == TodoID
+                                          select Todo).FirstOrDefault();
+
+                // map the student properties to the form controls
+                if (updatedTodo != null)
+                {
+                    TodoNameTextBox.Text = updatedTodo.TodoName;
+                    TodoNotesTextBox.Text = updatedTodo.TodoNotes;
+
+                }
+            }
+        }
+
+
         protected void CancelButton_Click(object sender, EventArgs e)
         {
+            // Redirect back to Students page
             Response.Redirect("~/TodoList.aspx");
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
-            // connect to EF DB
+            // Use EF to connect to the server
             using (TodoConnection db = new TodoConnection())
             {
-                // use the student model to save a new record
+                // use the Student model to create a new Todo object and
+                // save a new record
                 Todo newTodo = new Todo();
 
+                int TodoID = 0;
+
+                if (Request.QueryString.Count > 0)
+                {
+                    // get the id from url
+                    TodoID = Convert.ToInt32(Request.QueryString["TodoID"]);
+
+                    // get the current Todo from EF DB
+                    newTodo = (from Todo in db.Todos
+                                  where Todo.TodoID == TodoID
+                                  select Todo).FirstOrDefault();
+                }
+
+                // add form data to the new Todo record
                 newTodo.TodoName = TodoNameTextBox.Text;
                 newTodo.TodoNotes = TodoNotesTextBox.Text;
+                
 
+                // use LINQ to ADO.NET to add / insert new student into the database
 
-                // adds a new studdent to the Student Table collection
-                db.Todos.Add(newTodo);
+                // check to see if a new student is being added
+                if (TodoID == 0)
+                {
+                    db.Todos.Add(newTodo);
+                }
 
-                // run insert in DB
+                // save our changes - run an update
                 db.SaveChanges();
 
-                // redirect to the updated students page
+                // Redirect back to the updated students page
                 Response.Redirect("~/TodoList.aspx");
             }
         }
     }
 }
+
