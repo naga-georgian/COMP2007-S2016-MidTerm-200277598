@@ -16,5 +16,31 @@ namespace COMP2007_S2016_MidTerm_200277598
  
             
     }
-    }
+        protected void CancelButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/TodoList.aspx");
+        }
+
+        protected void SaveButton_Click(object sender, EventArgs e)
+        {
+            // connect to EF DB
+            using (TodoConnection db = new TodoConnection())
+            {
+                // use the student model to save a new record
+                Todo newTodo = new Todo();
+
+                newTodo.TodoName = TodoNameTextBox.Text;
+                newTodo.TodoNotes = TodoNotesTextBox.Text;
+                
+
+                // adds a new studdent to the Student Table collection
+                db.Todos.Add(newTodo);
+
+                // run insert in DB
+                db.SaveChanges();
+
+                // redirect to the updated students page
+                Response.Redirect("~/TodoList.aspx");
+            }
+        }
 }

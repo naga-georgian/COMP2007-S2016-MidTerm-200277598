@@ -13,6 +13,7 @@
                         <asp:BoundField DataField="TodoName" HeaderText="Todo" Visible="true" />
                         <asp:BoundField DataField="TodoNotes" HeaderText="Notes" Visible="true" />
                         <asp:BoundField DataField="Completed" HeaderText="Completed" Visible="true" />
+<asp:CheckBox id="CompletedCheckBox" AutoPostBack="True|False" Text="Label" TextAlign="Right|Left" Checked="True|False" OnCheckedChanged="OnCheckedChangedMethod" runat="server"/>
                         
 
                     </Columns>
