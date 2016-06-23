@@ -10,7 +10,7 @@
 namespace COMP2007_S2016_MidTerm_200277598 {
     
     
-    public partial class TodoDetails {
+    public partial class TodoList {
         
         /// <summary>
         /// TodoGridView control.
